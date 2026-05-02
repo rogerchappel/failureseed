@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "kind": "failureseed-fixture",
+  "createdAt": "2026-05-02T00:00:00.000Z",
+  "scenario": {
+    "id": "command-fail",
+    "summary": "A project whose test script deterministically exits 1.",
+    "command": [
+      "node",
+      "scripts/fail.js"
+    ],
+    "touchedFiles": [
+      "package.json",
+      "scripts/fail.js"
+    ],
+    "tags": [
+      "command",
+      "exit-code"
+    ],
+    "outputDir": "<OUTPUT_DIR>"
+  },
+  "replay": {
+    "cwd": "<OUTPUT_DIR>",
+    "command": [
+      "node",
+      "scripts/fail.js"
+    ],
+    "shellEscaped": "node scripts/fail.js"
+  },
+  "files": [
+    {
+      "path": "package.json",
+      "sha256": "a08ebc55082a8eeaf756c675e5776e7600705b565f3a1505a526e5a698636e59",
+      "bytes": 115
+    },
+    {
+      "path": "scripts/fail.js",
+      "sha256": "f389763e6bff19f7d22330698d07544501794c5fbbdfc5197bf98cdcbe38310d",
+      "bytes": 67
+    }
+  ],
+  "diagnostics": [
+    "Run the replay command inside the fixture directory.",
+    "Read FAILURESEED.md for a compact agent handoff prompt.",
+    "Inspect the listed touched files before changing anything."
+  ],
+  "safety": {
+    "localFirst": true,
+    "networkAccessRequired": false,
+    "destructiveActions": false
+  }
+}

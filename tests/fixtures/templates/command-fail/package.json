@@ -1,0 +1,7 @@
+{
+  "name": "failureseed-command-fail",
+  "private": true,
+  "scripts": {
+    "test": "node scripts/fail.js"
+  }
+}

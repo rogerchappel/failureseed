@@ -1,0 +1,7 @@
+{
+  "name": "failureseed-missing-script",
+  "private": true,
+  "scripts": {
+    "test": "node scripts/missing-entry.js"
+  }
+}
