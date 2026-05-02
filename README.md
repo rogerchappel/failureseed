@@ -1,65 +1,147 @@
 # failureseed
 
-failureseed packages failing commands, logs, environment hints, and minimal repo context into a replayable task seed.
+failureseed is a local-first CLI for two adjacent jobs:
 
-## Status
+1. generate small deterministic failing fixtures for agent QA
+2. capture a real failing command into a reviewable JSON/Markdown handoff bundle
 
-This repository is an early StackForge scaffold. The public contract is the PRD-driven V1 described in `docs/PRD.md`; implementation should stay local-first, deterministic, and reviewable.
+It stays intentionally small: no network calls, no hosted backend, no secret dumping.
 
-## What it will do
+## What ships in this MVP
 
-- Capture stdout, stderr, exit code, duration, cwd, git ref, and selected environment metadata.
-- Generate FAILURESEED.md and failureseed.json for handoff.
-- Pack small evidence bundles with allowlisted files.
-- Redact environment variables and known token patterns from logs.
+- Built-in deterministic failure scenarios
+- Fixture manifests (`failureseed.json`) and human handoff docs (`FAILURESEED.md`)
+- `list`, `seed`, `run`, `prompt`, and `replay` commands
+- `--dry-run` and `--json` support where it matters
+- Redaction for obvious token patterns in captured logs
+- Snapshot and smoke coverage for stable output
+
+## 60-second demo
+
+```sh
+npm test
+node bin/failureseed.js list
+node bin/failureseed.js seed command-fail --output ./tmp/command-fail
+node bin/failureseed.js replay ./tmp/command-fail/failureseed.json --dry-run
+node bin/failureseed.js run --output ./tmp/capture -- node -e "console.error('token=ghp_1234567890abcdefghijk'); process.exit(1)"
+```
+
+You should end up with:
+
+- `tmp/command-fail/failureseed.json`
+- `tmp/command-fail/FAILURESEED.md`
+- `tmp/capture/failureseed.json`
+- `tmp/capture/FAILURESEED.md`
 
 ## Install
 
 ```sh
-npm install failureseed
-```
-
-For local development from this repository:
-
-```sh
 npm install
-npm test
 ```
 
-## CLI sketch
+Run the CLI directly during local development:
 
 ```sh
-failureseed run -- pnpm test
-failureseed pack --include package.json --include pnpm-lock.yaml
-failureseed replay failureseed.json
-failureseed prompt failureseed.json --format markdown
+node bin/failureseed.js --help
 ```
 
-These commands describe the intended V1 interface from the PRD. Keep implementation changes aligned with `docs/TASKS.md` and update this section as behavior lands.
+## CLI reference
 
-## Local-first safety
+### `failureseed list`
 
-- No hidden network calls in core flows.
-- No credential exfiltration or secret value printing.
-- No destructive filesystem or Git operations without explicit user intent.
-- Prefer deterministic JSON/Markdown output that agents and humans can review.
-
-## Verify
-
-Run the local validation script before opening a pull request:
+List built-in deterministic scenarios.
 
 ```sh
+node bin/failureseed.js list
+node bin/failureseed.js list --json
+```
+
+### `failureseed seed <scenario>`
+
+Create a failing fixture directory and manifest.
+
+```sh
+node bin/failureseed.js seed command-fail --output ./tmp/command-fail
+node bin/failureseed.js seed config-mismatch --dry-run --json
+```
+
+Current scenarios:
+
+- `command-fail` — script exits with code 1
+- `config-mismatch` — config validation fails deterministically
+- `missing-script` — package references a missing entry file
+
+### `failureseed run -- <command ...>`
+
+Capture a real command failure into JSON/Markdown.
+
+```sh
+node bin/failureseed.js run --output ./tmp/capture -- npm test
+node bin/failureseed.js run --json -- node -e "console.error('boom'); process.exit(1)"
+```
+
+### `failureseed prompt <manifest>`
+
+Render a manifest as Markdown or echo the JSON.
+
+```sh
+node bin/failureseed.js prompt ./tmp/command-fail/failureseed.json
+node bin/failureseed.js prompt ./tmp/command-fail/failureseed.json --format json
+```
+
+### `failureseed replay <manifest>`
+
+Replay a fixture/capture command or print the exact replay plan.
+
+```sh
+node bin/failureseed.js replay ./tmp/command-fail/failureseed.json --dry-run
+node bin/failureseed.js replay ./tmp/command-fail/failureseed.json
+```
+
+## Agent handoff example
+
+A tight OSS sprint flow can look like this:
+
+1. Agent A hits a failing check.
+2. Agent A runs `failureseed run --output ./.failureseed/lint -- pnpm test`.
+3. Agent A pastes `FAILURESEED.md` into the handoff or attaches `failureseed.json`.
+4. Agent B replays from the exact command, cwd, and summarized environment.
+5. For QA or training, use `failureseed seed command-fail` to generate a stable failure without touching a real repo.
+
+That gives you both real-world captures and deterministic synthetic failures for review pipelines.
+
+## Local-first safety model
+
+- No hidden network calls in the core workflow
+- No destructive filesystem or git operations
+- No environment dump beyond compact platform metadata
+- Obvious token patterns are redacted from captured stderr/stdout
+- Manifests are plain files you can inspect before sharing
+
+## Non-goals
+
+- No artifact uploads
+- No autonomous fix generation
+- No full machine snapshotting
+- No hidden CI integration magic
+- No broad secret scanning beyond obvious patterns in this MVP
+
+## Verification
+
+```sh
+npm run check
 npm test
+npm run build
+npm run smoke
 bash scripts/validate.sh
 ```
-
-`scripts/validate.sh` checks required repo files and runs package scripts that exist. Missing optional `agent-qc` is treated as a skip, not a failure.
 
 ## Documentation
 
 - [Product requirements](docs/PRD.md)
 - [Task breakdown](docs/TASKS.md)
 - [Orchestration plan](docs/ORCHESTRATION.md)
+- [Documentation index](docs/README.md)
 - [Contributing guide](CONTRIBUTING.md)
 - [Security policy](SECURITY.md)
 

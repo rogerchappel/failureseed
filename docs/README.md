@@ -1,13 +1,23 @@
 # failureseed Documentation
 
-This directory holds project documentation.
+## Core docs
 
-## Contents
+- [README](../README.md) — quickstart, CLI reference, safety model, non-goals
+- [PRD](./PRD.md) — product intent and verification goals
+- [TASKS](./TASKS.md) — implementation slices and acceptance criteria
+- [ORCHESTRATION](./ORCHESTRATION.md) — suggested agent lanes and review gates
 
-- [Contributing guide](../CONTRIBUTING.md)
-- [Security policy](../SECURITY.md)
-- [Agent instructions](../AGENTS.md)
+## MVP notes
 
-## Additional docs
+The current MVP focuses on deterministic failure fixtures plus reproducible failure captures:
 
-For a hosted documentation site, see the `docs-site/` directory if present.
+- built-in scenarios for agent QA
+- manifest + Markdown handoff output
+- dry-run/json-friendly CLI flows
+- local replay without network access
+
+## Suggested review path
+
+1. Run the 60-second demo in the main README.
+2. Inspect `tests/snapshots/` for stable output expectations.
+3. Run `bash scripts/validate.sh` before handoff.
