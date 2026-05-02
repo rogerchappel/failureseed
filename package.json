@@ -1,24 +1,31 @@
 {
   "name": "failureseed",
   "version": "0.1.0",
-  "description": "Local-first failed-command capture tool for reproducible agent debugging tasks.",
+  "description": "Local-first CLI for deterministic failing fixtures and reproducible failure handoff bundles.",
   "type": "module",
   "main": "./src/index.js",
+  "bin": {
+    "failureseed": "./bin/failureseed.js"
+  },
   "exports": {
     ".": "./src/index.js"
   },
   "files": [
+    "bin",
     "src",
     "README.md"
   ],
   "scripts": {
-    "test": "node --test"
+    "check": "node scripts/check.js",
+    "build": "node scripts/build.js",
+    "test": "node --test",
+    "smoke": "node scripts/smoke.js"
   },
   "keywords": [
     "agents",
     "debugging",
+    "fixtures",
     "reproducibility",
-    "logs",
     "cli"
   ],
   "author": "StackForge User",
