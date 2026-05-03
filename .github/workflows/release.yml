@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  github-release:
+    name: Build reviewed GitHub release artifact
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run deterministic release gate
+        run: npm run release:check
+
+      - name: Pack npm artifact without publishing
+        run: npm pack
+
+      - name: Generate release notes
+        run: |
+          previous_tag="$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || true)"
+          {
+            echo "## Changes"
+            if [ -n "$previous_tag" ]; then
+              git log --oneline "$previous_tag"..HEAD
+            else
+              git log --oneline --max-count=20
+            fi
+            echo
+            echo "## Verification"
+            echo "- npm run release:check"
+            echo "- npm pack"
+          } > RELEASE_NOTES.md
+          cat RELEASE_NOTES.md
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: RELEASE_NOTES.md
+          files: '*.tgz'
