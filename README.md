@@ -134,6 +134,8 @@ npm test
 npm run build
 npm run smoke
 bash scripts/validate.sh
+npm run package:smoke
+npm run release:check
 ```
 
 ## Documentation
@@ -142,6 +144,7 @@ bash scripts/validate.sh
 - [Task breakdown](docs/TASKS.md)
 - [Orchestration plan](docs/ORCHESTRATION.md)
 - [Documentation index](docs/README.md)
+- [Release checklist](docs/RELEASE.md)
 - [Contributing guide](CONTRIBUTING.md)
 - [Security policy](SECURITY.md)
 

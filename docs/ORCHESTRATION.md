@@ -24,6 +24,7 @@ Then copy this file into `docs/ORCHESTRATION.md` in the generated repo.
 
 - Every implementation task lands through a PR-linked branch or worktree.
 - Run `scripts/validate.sh` before handoff.
+- Run `npm run release:check` and `node ../releasebox/bin/releasebox.js check .` before release-readiness handoff when ReleaseBox is available.
 - Include generated report examples in the PR when relevant.
 - Use `branchbrief`/`prpack` after the first meaningful implementation slice.
 
@@ -33,3 +34,4 @@ Then copy this file into `docs/ORCHESTRATION.md` in the generated repo.
 - Prefer explicit config files over hidden discovery when safety matters.
 - Emit JSON for future CrewCmd/OpenClaw orchestration and Markdown for human review.
 - Do not add hosted services, telemetry, or autonomous publish/merge behavior in V1.
+- Keep npm/Homebrew publishing disabled until a human explicitly approves it.

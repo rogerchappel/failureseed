@@ -34,8 +34,10 @@
 
 ## Acceptance Criteria
 
-- `pnpm check`, `pnpm test`, and `pnpm build` pass.
+- `npm run check`, `npm test`, and `npm run build` pass.
+- `npm run smoke`, `npm run package:smoke`, and `npm run release:check` pass.
 - `scripts/validate.sh` passes from a clean checkout.
 - The main CLI workflow works against fixtures without network access.
 - Generated Markdown and JSON reports are stable under snapshot tests.
 - README includes a 60-second demo path and explicit non-goals.
+- ReleaseBox config, release dry-run workflow, issue templates, labels, and release checklist are present.
