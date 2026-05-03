@@ -13,13 +13,16 @@
   "files": [
     "bin",
     "src",
+    "tests/fixtures/templates",
     "README.md"
   ],
   "scripts": {
     "check": "node scripts/check.js",
     "build": "node scripts/build.js",
     "test": "node --test",
-    "smoke": "node scripts/smoke.js"
+    "smoke": "node scripts/smoke.js",
+    "package:smoke": "node scripts/package-smoke.js",
+    "release:check": "node scripts/release-check.js"
   },
   "keywords": [
     "agents",
@@ -29,5 +32,16 @@
     "cli"
   ],
   "author": "StackForge User",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stackforge/failureseed.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stackforge/failureseed/issues"
+  },
+  "homepage": "https://github.com/stackforge/failureseed#readme",
+  "engines": {
+    "node": ">=22"
+  }
 }
