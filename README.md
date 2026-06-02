@@ -33,6 +33,15 @@ You should end up with:
 - `tmp/capture/failureseed.json`
 - `tmp/capture/FAILURESEED.md`
 
+For a guided version that prints a compact handoff summary, run:
+
+```sh
+bash examples/demo-failure-handoff.sh
+```
+
+See [Create a reproducible failure handoff](docs/tutorials/reproducible-agent-handoff.md)
+for the full recipe.
+
 ## Install
 
 ```sh
