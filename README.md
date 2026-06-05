@@ -42,6 +42,8 @@ bash examples/demo-failure-handoff.sh
 See [Create a reproducible failure handoff](docs/tutorials/reproducible-agent-handoff.md)
 for the full recipe.
 
+For a focused capture and redaction walkthrough, run [`examples/redacted-capture-command.sh`](examples/redacted-capture-command.sh) and read [`docs/tutorials/review-redacted-capture.md`](docs/tutorials/review-redacted-capture.md).
+
 ## Install
 
 ```sh
