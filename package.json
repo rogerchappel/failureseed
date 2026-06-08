@@ -14,7 +14,8 @@
     "bin",
     "src",
     "tests/fixtures/templates",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "check": "node scripts/check.js",
@@ -31,7 +32,7 @@
     "reproducibility",
     "cli"
   ],
-  "author": "StackForge User",
+  "author": "Roger Chappel",
   "license": "MIT",
   "repository": {
     "type": "git",
