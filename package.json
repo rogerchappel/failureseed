@@ -16,7 +16,9 @@
     "tests/fixtures/templates",
     "README.md",
     "LICENSE",
-    "SECURITY.md"
+    "SECURITY.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md"
   ],
   "scripts": {
     "check": "node scripts/check.js",
