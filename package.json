@@ -40,7 +40,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stackforge/failureseed.git"
+    "url": "git+https://github.com/rogerchappel/failureseed.git"
   },
   "bugs": {
     "url": "https://github.com/stackforge/failureseed/issues"
