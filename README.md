@@ -46,6 +46,15 @@ For a focused capture and redaction walkthrough, run [`examples/redacted-capture
 
 ## Install
 
+Install from npm after release:
+
+```sh
+npm install -g failureseed
+failureseed list
+```
+
+From a checkout:
+
 ```sh
 npm install
 ```
