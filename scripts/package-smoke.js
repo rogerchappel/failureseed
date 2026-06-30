@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { mkdtemp, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { execFile as execFileCallback } from 'node:child_process';
@@ -19,6 +19,17 @@ async function run(command, args, options = {}) {
 }
 
 try {
+  const packageJson = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'));
+  if (packageJson.repository?.url !== 'git+https://github.com/rogerchappel/failureseed.git') {
+    throw new Error(`Unexpected repository URL: ${packageJson.repository?.url ?? 'missing'}`);
+  }
+  if (packageJson.bugs?.url !== 'https://github.com/rogerchappel/failureseed/issues') {
+    throw new Error(`Unexpected bugs URL: ${packageJson.bugs?.url ?? 'missing'}`);
+  }
+  if (packageJson.homepage !== 'https://github.com/rogerchappel/failureseed#readme') {
+    throw new Error(`Unexpected homepage URL: ${packageJson.homepage ?? 'missing'}`);
+  }
+
   const packResult = await run('npm', ['pack', '--pack-destination', temp]);
   const tarballName = packResult.stdout.trim().split('\n').at(-1);
   if (!tarballName) {
