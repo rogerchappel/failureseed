@@ -43,9 +43,9 @@
     "url": "git+https://github.com/rogerchappel/failureseed.git"
   },
   "bugs": {
-    "url": "https://github.com/stackforge/failureseed/issues"
+    "url": "https://github.com/rogerchappel/failureseed/issues"
   },
-  "homepage": "https://github.com/stackforge/failureseed#readme",
+  "homepage": "https://github.com/rogerchappel/failureseed#readme",
   "engines": {
     "node": ">=22"
   }
