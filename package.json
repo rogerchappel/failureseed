@@ -27,7 +27,8 @@
     "test": "node --test",
     "smoke": "node scripts/smoke.js",
     "package:smoke": "node scripts/package-smoke.js",
-    "release:check": "node scripts/release-check.js"
+    "release:check": "node scripts/release-check.js",
+    "lint": "npm run check"
   },
   "keywords": [
     "agents",
